@@ -1,0 +1,40 @@
+<view class="container">
+  <view class="status-bar">
+    <text class="progress">进度：{{currentIndex + 1}}/{{totalWords}}</text>
+    <text class="score">得分：{{score}}</text>
+  </view>
+
+  <view class="card-container" wx:if="{{currentWord}}">
+    <view class="word-card">
+      <view class="word">{{currentWord.word}}</view>
+      <view class="phonetic" bindtap="playAudio">[{{currentWord.phonetic}}]</view>
+      
+      <view class="answer-area" wx:if="{{!showAnswer}}">
+        <button class="show-btn" bindtap="showAnswer">显示答案</button>
+      </view>
+      
+      <view class="answer-content" wx:if="{{showAnswer}}">
+        <view class="definition">{{currentWord.definition}}</view>
+        <view class="translation">{{currentWord.translation}}</view>
+        <view class="examples">
+          <view class="example-item" wx:for="{{currentWord.examples}}" wx:key="*this">
+            {{item}}
+          </view>
+        </view>
+        
+        <view class="feedback-btns">
+          <button class="wrong-btn" bindtap="markAsWrong">不认识</button>
+          <button class="right-btn" bindtap="markAsRight">认识</button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:else>
+    <image class="empty-icon" src="/images/empty-wordbook.png"></image>
+    <text class="empty-text">还没有添加任何单词到生词本</text>
+    <navigator url="/pages/index/index" open-type="switchTab">
+      <button class="add-btn">去添加生词</button>
+    </navigator>
+  </view>
+</view> 

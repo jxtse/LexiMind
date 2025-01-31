@@ -1,0 +1,39 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/wordbook/wordbook",
+    "pages/review/review"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#178E96",
+    "navigationBarTitleText": "",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#178E96",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "查词",
+        "iconPath": "images/tab/搜索.png",
+        "selectedIconPath": "images/tab/搜索active.png"
+      },
+      {
+        "pagePath": "pages/wordbook/wordbook",
+        "text": "生词本",
+        "iconPath": "images/tab/字典.png",
+        "selectedIconPath": "images/tab/字典active.png"
+      },
+      {
+        "pagePath": "pages/review/review",
+        "text": "复习",
+        "iconPath": "images/tab/复习.png",
+        "selectedIconPath": "images/tab/复习active.png"
+      }
+    ]
+  }
+} 

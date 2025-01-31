@@ -1,0 +1,39 @@
+<view class="container">
+  <view class="header">
+    <text class="count">我的生词本</text>
+    <text class="count">共 {{wordList.length}} 个单词</text>
+  </view>
+
+  <view class="word-list" wx:if="{{wordList.length > 0}}">
+    <view class="word-card" wx:for="{{wordList}}" wx:key="addTime">
+      <view class="card-content">
+        <view class="word-header">
+          <text class="word">{{item.word}}</text>
+          <text class="phonetic">[{{item.phonetic}}]</text>
+        </view>
+        <view class="divider"></view>
+        <view class="word-body">
+          <view class="translation">{{item.translation}}</view>
+          <view class="definition">{{item.definition}}</view>
+          <view class="examples">
+            <view class="example-item" wx:for="{{item.examples}}" wx:for-item="example" wx:key="*this">
+              {{example}}
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="card-footer">
+        <view class="add-time">添加时间：{{item.addTimeStr}}</view>
+        <view class="delete-btn" bindtap="deleteWord" data-index="{{index}}">删除</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:else>
+    <image class="empty-icon" src="/images/empty-wordbook.png"></image>
+    <text class="empty-text">还没有添加任何单词到生词本</text>
+    <navigator url="/pages/index/index" open-type="switchTab">
+      <button class="add-btn">去添加生词</button>
+    </navigator>
+  </view>
+</view> 

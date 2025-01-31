@@ -1,0 +1,10 @@
+├── app.js              # 小程序入口文件
+├── app.json            # 小程序配置文件
+├── app.wxss            # 全局样式文件
+├── pages/
+│   ├── index/         # 查词页面
+│   ├── wordbook/      # 生词本页面
+│   └── review/        # 复习页面
+├── components/         # 公共组件
+├── utils/             # 工具函数
+└── images/            # 图片资源 

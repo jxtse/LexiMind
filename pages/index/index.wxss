@@ -1,0 +1,215 @@
+.container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  position: relative;
+}
+
+.top-card {
+  background: linear-gradient(180deg, 
+    #178E96 0%, 
+    #1fa8b1 40%, 
+    rgba(23, 142, 150, 0.5) 70%,
+    rgba(23, 142, 150, 0.2) 85%,
+    rgba(245, 245, 245, 0) 100%
+  );
+  padding: 40rpx 30rpx 200rpx;
+  border-radius: 0;
+  position: relative;
+  z-index: 1;
+  box-shadow: none;
+}
+
+.brand {
+  text-align: center;
+  margin-bottom: 40rpx;
+  color: #FDE3C8;
+}
+
+.brand-name {
+  font-size: 60rpx;
+  font-weight: bold;
+  text-shadow: 0 2rpx 4rpx rgba(0,0,0,0.1);
+  display: block;
+}
+
+.brand-slogan {
+  font-size: 28rpx;
+  opacity: 0.9;
+  margin-top: 10rpx;
+  display: block;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 0 10rpx;
+  margin: 0 auto;
+  max-width: 680rpx;
+}
+
+.search-bar {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.95);
+  border-radius: 20rpx;
+  padding: 16rpx 24rpx;
+  transition: all 0.3s;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.1);
+}
+
+.search-bar:focus-within {
+  background: #fff;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.15);
+}
+
+.search-icon {
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 16rpx;
+  opacity: 0.6;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 28rpx;
+  height: 36rpx;
+  line-height: 36rpx;
+}
+
+.placeholder {
+  color: #178E96;
+}
+
+.clear-icon {
+  color: #178E96;
+  font-size: 28rpx;
+  padding: 16rpx;
+  margin: -16rpx;
+  width: 32rpx;
+  height: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.clear-icon:active {
+  opacity: 0.5;
+}
+
+.search-btn {
+  background: #FFFFFF;
+  color: #178E96;
+  font-size: 28rpx;
+  padding: 0 40rpx;
+  height: 68rpx;
+  line-height: 68rpx;
+  border-radius: 20rpx;
+  margin: 0;
+  font-weight: bold;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.1);
+}
+
+.search-btn:active {
+  opacity: 0.9;
+  transform: translateY(2rpx);
+}
+
+.content {
+  padding: 0 20rpx;
+  margin-top: -140rpx;
+  position: relative;
+  z-index: 2;
+}
+
+.result-box {
+  margin: 20rpx;
+  padding: 40rpx;
+  border-radius: 20rpx;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 4rpx 24rpx rgba(0,0,0,0.12);
+  backdrop-filter: blur(10px);
+}
+
+.word {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.phonetic {
+  color: #666;
+  font-size: 28rpx;
+  margin-bottom: 20rpx;
+}
+
+.definition, .translation {
+  margin: 20rpx 0;
+  line-height: 1.6;
+  font-size: 30rpx;
+}
+
+.definition {
+  color: #444;
+}
+
+.translation {
+  color: #666;
+}
+
+.examples {
+  margin-top: 30rpx;
+  padding-top: 20rpx;
+  border-top: 1px solid #eee;
+}
+
+.example-title {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 16rpx;
+  font-size: 28rpx;
+}
+
+.example-item {
+  color: #666;
+  margin: 16rpx 0;
+  font-size: 26rpx;
+  line-height: 1.6;
+}
+
+.add-btn {
+  margin-top: 40rpx;
+  background: #178E96;
+  color: white;
+  font-size: 30rpx;
+  border-radius: 20rpx;
+}
+
+.add-btn:active {
+  opacity: 0.8;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 200rpx;
+}
+
+.empty-icon {
+  width: 240rpx;
+  height: 240rpx;
+  margin-bottom: 40rpx;
+  opacity: 0.6;
+}
+
+.empty-text {
+  color: #178E96;
+  font-size: 28rpx;
+  margin-bottom: 40rpx;
+} 

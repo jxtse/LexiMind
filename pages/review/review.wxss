@@ -1,0 +1,150 @@
+.container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  position: relative;
+}
+
+/* 添加顶部渐变卡片 */
+.status-bar {
+  background: linear-gradient(180deg, 
+    #178E96 0%, 
+    #1fa8b1 30%, 
+    rgba(23, 142, 150, 0.8) 50%,
+    rgba(23, 142, 150, 0.4) 70%,
+    rgba(23, 142, 150, 0.2) 85%,
+    rgba(245, 245, 245, 0) 100%
+  );
+  padding: 40rpx 30rpx 200rpx;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+  box-shadow: none;
+}
+
+.progress, .score {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 32rpx;
+}
+
+.card-container {
+  padding: 0 20rpx;
+  margin-top: -140rpx;
+  position: relative;
+  z-index: 2;
+}
+
+.word-card {
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 20rpx;
+  padding: 40rpx;
+  box-shadow: 0 4rpx 24rpx rgba(0,0,0,0.12);
+  backdrop-filter: blur(10px);
+  min-height: 400rpx;
+}
+
+/* 统一按钮样式 */
+.show-btn, .wrong-btn, .right-btn {
+  border-radius: 20rpx;
+  font-size: 30rpx;
+  padding: 20rpx 0;
+  transition: all 0.3s;
+}
+
+.show-btn {
+  background: #178E96;
+  color: white;
+  width: 240rpx;
+}
+
+.feedback-btns {
+  display: flex;
+  justify-content: space-between;
+  gap: 30rpx;
+  margin-top: 40rpx;
+}
+
+.wrong-btn, .right-btn {
+  flex: 1;
+}
+
+.wrong-btn {
+  background: #f44336;
+  color: white;
+}
+
+.right-btn {
+  background: #178E96;
+  color: white;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 200rpx;
+}
+
+.empty-icon {
+  width: 360rpx;
+  height: 360rpx;
+  margin-bottom: 10rpx;
+  opacity: 0.6;
+}
+
+.empty-text {
+  color: #178E96;
+  font-size: 28rpx;
+  margin-bottom: 40rpx;
+}
+
+.add-btn {
+  background: #178E96;
+  color: white;
+  font-size: 28rpx;
+  padding: 0 60rpx;
+  border-radius: 20rpx;
+}
+
+.add-btn:active {
+  opacity: 0.8;
+} 
+
+.word {
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.phonetic {
+  text-align: center;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.answer-area {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.answer-content {
+  margin-top: 20px;
+}
+
+.definition, .translation {
+  margin: 10px 0;
+  line-height: 1.5;
+}
+
+.examples {
+  margin: 15px 0;
+}
+
+.example-item {
+  color: #666;
+  margin: 5px 0;
+  font-size: 14px;
+} 

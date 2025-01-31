@@ -1,0 +1,45 @@
+<view class="container">
+  <view class="top-card">
+    <view class="brand">
+      <text class="brand-name">LexiMind</text>
+      <text class="brand-slogan">AI智能词典</text>
+    </view>
+    <view class="search-box">
+      <view class="search-bar">
+        <image class="search-icon" src="/images/search.png"></image>
+        <input 
+          class="search-input" 
+          placeholder=""
+          placeholder-class="placeholder"
+          value="{{searchWord}}"
+          bindinput="onInputChange"
+          confirm-type="search"
+          bindconfirm="searchWord"
+        />
+        <view class="clear-icon" bindtap="clearInput" wx:if="{{searchWord}}">✕</view>
+      </view>
+      <button class="search-btn" bindtap="searchWord">查询</button>
+    </view>
+  </view>
+
+  <view class="content">
+    <view class="result-box" wx:if="{{wordResult}}">
+      <view class="word">{{wordResult.word}}</view>
+      <view class="phonetic">[{{wordResult.phonetic}}]</view>
+      <view class="definition">{{wordResult.definition}}</view>
+      <view class="translation">{{wordResult.translation}}</view>
+      <view class="examples">
+        <view class="example-title">例句：</view>
+        <view class="example-item" wx:for="{{wordResult.examples}}" wx:key="*this">
+          {{item}}
+        </view>
+      </view>
+      <button class="add-btn" bindtap="addToWordbook">添加到生词本</button>
+    </view>
+
+    <view class="empty-state" wx:if="{{!wordResult}}">
+      <!-- <image class="empty-icon" src="/images/dict-empty.png"></image> -->
+      <text class="empty-text">输入单词开始查询</text>
+    </view>
+  </view>
+</view> 

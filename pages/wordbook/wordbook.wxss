@@ -1,0 +1,169 @@
+.container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  position: relative;
+}
+
+.header {
+  background: linear-gradient(180deg, 
+    #178E96 0%, 
+    #1fa8b1 30%, 
+    rgba(23, 142, 150, 0.8) 50%,
+    rgba(23, 142, 150, 0.4) 70%,
+    rgba(23, 142, 150, 0.2) 85%,
+    rgba(245, 245, 245, 0) 100%
+  );
+  padding: 40rpx 30rpx 200rpx;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+  box-shadow: none;
+}
+
+.title {
+  color: white;
+  font-size: 48rpx;
+  font-weight: bold;
+  text-shadow: 0 2rpx 4rpx rgba(0,0,0,0.1);
+}
+
+.count {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 32rpx;
+  /* margin-top: 10rpx; */
+}
+
+.word-list {
+  padding: 0 20rpx;
+  margin-top: -140rpx;
+  padding-bottom: 20rpx;
+  position: relative;
+  z-index: 2;
+}
+
+.word-card {
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 24rpx rgba(0,0,0,0.12);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+
+.card-content {
+  padding: 24rpx;
+}
+
+.word-header {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-bottom: 16rpx;
+}
+
+.word {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.phonetic {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.divider {
+  height: 1px;
+  background: #eee;
+  margin: 16rpx 0;
+}
+
+.word-body {
+  padding: 8rpx 0;
+}
+
+.translation {
+  font-size: 30rpx;
+  color: #178E96;
+  margin-bottom: 12rpx;
+}
+
+.definition {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 16rpx;
+  line-height: 1.5;
+}
+
+.examples {
+  margin-top: 16rpx;
+}
+
+.example-item {
+  font-size: 26rpx;
+  color: #888;
+  line-height: 1.5;
+  margin: 8rpx 0;
+  padding-left: 16rpx;
+  border-left: 4rpx solid #eee;
+}
+
+.card-footer {
+  padding: 20rpx 24rpx;
+  background: rgba(249, 249, 249, 0.8);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 24rpx;
+}
+
+.add-time {
+  color: #999;
+}
+
+.delete-btn {
+  color: #ff4d4f;
+  padding: 8rpx 24rpx;
+  border-radius: 16rpx;
+  background: rgba(255, 77, 79, 0.1);
+}
+
+.delete-btn:active {
+  opacity: 0.8;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 200rpx;
+  padding-bottom: 120rpx;
+}
+
+.empty-icon {
+  width: 360rpx;
+  height: 360rpx;
+  margin-bottom: 10rpx;
+  opacity: 0.6;
+}
+
+.empty-text {
+  color: #178E96;
+  font-size: 28rpx;
+  margin-bottom: 40rpx;
+}
+
+.add-btn {
+  background: #178E96;
+  color: white;
+  font-size: 28rpx;
+  padding: 0 60rpx;
+  border-radius: 20rpx;
+}
+
+.add-btn:active {
+  opacity: 0.8;
+} 
