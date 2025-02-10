@@ -82,5 +82,20 @@ Page({
         }
       })
     }
+  },
+
+  onShareAppMessage: function () {
+    return {
+      title: 'LexiMind单词复习',
+      path: '/pages/review/review'
+    }
+  },
+
+  onShareTimeline: function() {
+    return {
+      title: 'LexiMind智能复习 - 科学记忆单词',
+      query: '',
+      imageUrl: '/images/share-timeline.png'
+    }
   }
 }) 

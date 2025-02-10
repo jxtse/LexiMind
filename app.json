@@ -35,5 +35,6 @@
         "selectedIconPath": "images/tab/复习active.png"
       }
     ]
-  }
+  },
+  "enableShareTimeline": true
 } 

@@ -6,6 +6,15 @@ Page({
     wordResult: null
   },
 
+  // 绑定分享参数
+  onShareTimeline: function() {
+    return {
+      title: 'LexiMind智能词典 - AI驱动的英语学习助手',
+      query: '',
+      imageUrl: '/images/share-timeline.png'  // 可选，建议添加一张分享用的图片
+    }
+  },
+
   // 修改输入框内容变化的处理函数
   onInputChange(e) {
     this.setData({
@@ -69,5 +78,12 @@ Page({
       searchWord: '',
       wordResult: null
     })
+  },
+
+  onShareAppMessage: function () {
+    return {
+      title: 'LexiMind智能词典',
+      path: '/pages/index/index'
+    }
   }
 }) 

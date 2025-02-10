@@ -53,5 +53,20 @@ Page({
         }
       }
     })
+  },
+
+  onShareTimeline: function() {
+    return {
+      title: 'LexiMind生词本 - 智能管理你的词汇',
+      query: '',
+      imageUrl: '/images/share-timeline.png'
+    }
+  },
+
+  onShareAppMessage: function () {
+    return {
+      title: 'LexiMind生词本',
+      path: '/pages/wordbook/wordbook'
+    }
   }
 }) 
