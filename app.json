@@ -2,7 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/wordbook/wordbook",
-    "pages/review/review"
+    "pages/review/review",
+    "pages/thematic/thematic"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -33,6 +34,12 @@
         "text": "复习",
         "iconPath": "images/tab/复习.png",
         "selectedIconPath": "images/tab/复习active.png"
+      },
+      {
+        "pagePath": "pages/thematic/thematic",
+        "text": "主题词汇",
+        "iconPath": "images/tab/字典.png",
+        "selectedIconPath": "images/tab/字典active.png"
       }
     ]
   },
