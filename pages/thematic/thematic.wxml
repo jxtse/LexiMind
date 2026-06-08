@@ -1,157 +1,103 @@
-<view class="container">
-  <!-- 渐变头部区域 -->
+<view
+  class="container"
+  bindtouchstart="onTouchStart"
+  bindtouchmove="onTouchMove"
+  bindtouchend="onTouchEnd"
+  bindtouchcancel="onTouchEnd"
+>
   <view class="top-card">
     <view class="brand">
       <text class="brand-name">主题词汇</text>
-      <text class="brand-slogan">AI智能生成场景词汇</text>
+      <text class="brand-slogan">按场景生成真正用得上的英语词汇</text>
     </view>
-    
-    <!-- 输入区域 -->
-    <view class="search-box">
+
+    <view class="search-box {{searchFocused ? 'is-focused' : ''}}">
       <view class="search-bar">
-        <input 
-          class="search-input" 
-          placeholder="例如：大都会博物馆、咖啡店、医院就诊..." 
+        <input
+          class="search-input"
+          placeholder="例如：大都会博物馆、咖啡店、医院就诊"
           placeholder-class="placeholder"
-          value="{{inputTopic}}" 
+          value="{{inputTopic}}"
+          focus="{{searchFocused}}"
           bindinput="onTopicInput"
+          bindfocus="onSearchFocus"
+          bindblur="onSearchBlur"
+          bindkeyboardheightchange="onKeyboardHeightChange"
           confirm-type="search"
           bindconfirm="generateWords"
         />
-        <view class="clear-icon" bindtap="clearInput" wx:if="{{inputTopic}}">✕</view>
+        <view class="clear-icon" bindtap="clearInput" wx:if="{{inputTopic}}">×</view>
       </view>
       <button class="search-btn" bindtap="generateWords" disabled="{{loading}}">
-        {{loading ? '生成中...' : '生成'}}
+        {{loading ? '生成中' : '生成'}}
       </button>
     </view>
   </view>
 
   <view class="content">
-    <!-- 难度选择卡片 -->
     <view class="difficulty-card">
-      <text class="card-title">生成难度</text>
-      <view class="difficulty-options">
-        <text 
-          class="difficulty-option {{generateDifficulty === 'all' ? 'active' : ''}}"
-          bindtap="selectGenerateDifficulty"
-          data-difficulty="all"
-        >
-          全部难度
-        </text>
-        <text 
-          class="difficulty-option {{generateDifficulty === 'beginner' ? 'active' : ''}}"
-          bindtap="selectGenerateDifficulty"
-          data-difficulty="beginner"
-        >
-          仅初级
-        </text>
-        <text 
-          class="difficulty-option {{generateDifficulty === 'intermediate' ? 'active' : ''}}"
-          bindtap="selectGenerateDifficulty"
-          data-difficulty="intermediate"
-        >
-          仅中级
-        </text>
-        <text 
-          class="difficulty-option {{generateDifficulty === 'advanced' ? 'active' : ''}}"
-          bindtap="selectGenerateDifficulty"
-          data-difficulty="advanced"
-        >
-          仅高级
-        </text>
-      </view>
-      <text class="difficulty-hint">
-        {{generateDifficulty === 'all' ? '生成各种难度的单词，适合全面学习' : 
-          generateDifficulty === 'beginner' ? '生成基础单词，适合初学者' :
-          generateDifficulty === 'intermediate' ? '生成中等难度单词，适合有一定基础的学习者' :
-          '生成高级单词，适合英语水平较高的学习者'}}
-      </text>
-    </view>
-
-    <!-- 预设主题 -->
-    <view class="preset-card" wx:if="{{!result}}">
-      <text class="card-title">热门主题</text>
-      <view class="topic-grid">
-        <text 
-          class="topic-tag" 
-          wx:for="{{presetTopics}}" 
-          wx:key="*this"
-          bindtap="selectPresetTopic"
-          data-topic="{{item}}"
-        >
-          {{item}}
-        </text>
-      </view>
-    </view>
-
-    <!-- 生成结果 -->
-    <view class="result-section" wx:if="{{result}}">
-      <!-- 主题信息卡片 -->
-      <view class="topic-card">
-        <text class="topic-name">{{result.topic}}</text>
-        <text class="topic-desc">{{result.description}}</text>
-        <text class="generation-info">已生成 {{result.words.length}} 个{{result.targetDifficulty === 'all' ? '各种难度的' : result.targetDifficulty === 'beginner' ? '初级' : result.targetDifficulty === 'intermediate' ? '中级' : '高级'}}单词</text>
-      </view>
-
-      <!-- 难度筛选 -->
-      <view class="filter-card" wx:if="{{result.targetDifficulty === 'all'}}">
-        <text class="filter-label">筛选难度：</text>
-        <view class="filter-options">
-          <text 
-            class="filter-tag {{selectedDifficulty === 'all' ? 'active' : ''}}"
-            bindtap="filterByDifficulty"
-            data-difficulty="all"
-          >
-            全部
-          </text>
-          <text 
-            class="filter-tag {{selectedDifficulty === 'beginner' ? 'active' : ''}}"
-            bindtap="filterByDifficulty"
-            data-difficulty="beginner"
-          >
-            初级
-          </text>
-          <text 
-            class="filter-tag {{selectedDifficulty === 'intermediate' ? 'active' : ''}}"
-            bindtap="filterByDifficulty"
-            data-difficulty="intermediate"
-          >
-            中级
-          </text>
-          <text 
-            class="filter-tag {{selectedDifficulty === 'advanced' ? 'active' : ''}}"
-            bindtap="filterByDifficulty"
-            data-difficulty="advanced"
-          >
-            高级
-          </text>
+      <view class="difficulty-header">
+        <view>
+          <text class="card-title">生成难度</text>
+          <text class="difficulty-hint">{{difficultyHint}}</text>
+        </view>
+        <view class="difficulty-value">
+          <text class="difficulty-number">{{difficultyLevel}}</text>
+          <text class="difficulty-total">/10</text>
         </view>
       </view>
 
-      <!-- 词汇列表 -->
+      <slider
+        class="difficulty-slider"
+        min="1"
+        max="10"
+        step="1"
+        value="{{difficultyLevel}}"
+        activeColor="#178E96"
+        backgroundColor="#d9eef0"
+        block-color="#ffffff"
+        block-size="24"
+        bindchanging="onDifficultyChanging"
+        bindchange="onDifficultyChange"
+      />
+
+      <view class="slider-scale">
+        <text>日常</text>
+        <text>进阶</text>
+        <text>专业</text>
+      </view>
+    </view>
+
+    <view class="result-section" wx:if="{{result}}">
+      <view class="topic-card">
+        <view class="topic-title-row">
+          <text class="topic-name">{{result.topic}}</text>
+          <text class="level-pill">难度 {{result.targetDifficultyLevel || difficultyLevel}}</text>
+        </view>
+        <text class="topic-desc">{{result.description}}</text>
+        <text class="generation-info">已生成 {{result.words.length}} 个词汇</text>
+      </view>
+
       <view class="words-list">
-        <view 
+        <view
           class="word-card"
-          wx:for="{{filteredWords}}" 
+          wx:for="{{filteredWords}}"
           wx:key="word"
         >
-          <view class="card-content">
-            <view class="word-header">
+          <view class="word-header">
+            <view class="word-main">
               <text class="word">{{item.word}}</text>
               <text class="phonetic">[{{item.phonetic}}]</text>
-              <text class="difficulty-badge difficulty-{{item.difficulty}}" wx:if="{{result.targetDifficulty === 'all'}}">
-                {{item.difficulty === 'beginner' ? '初级' : item.difficulty === 'intermediate' ? '中级' : '高级'}}
-              </text>
             </view>
-            <view class="divider"></view>
-            <view class="word-body">
-              <view class="translation">{{item.translation}}</view>
-              <view class="definition">{{item.definition}}</view>
-              <view class="examples">
-                <view class="example-item">{{item.example}}</view>
-              </view>
-            </view>
+            <text class="difficulty-badge">Lv.{{item.difficultyLevel || result.targetDifficultyLevel || difficultyLevel}}</text>
           </view>
+
+          <view class="word-body">
+            <view class="translation">{{item.translation}}</view>
+            <view class="definition">{{item.definition}}</view>
+            <view class="example-item">{{item.example}}</view>
+          </view>
+
           <view class="card-footer">
             <view class="word-meta">主题词汇</view>
             <view class="add-btn-small" bindtap="addToWordbook" data-word="{{item}}">
@@ -161,16 +107,15 @@
         </view>
       </view>
 
-      <!-- 操作按钮 -->
       <view class="action-buttons">
         <button class="action-btn secondary" bindtap="clearResult">重新生成</button>
-        <button class="action-btn primary" bindtap="addAllToWordbook">全部加入生词本</button>
+        <button class="action-btn primary" bindtap="addAllToWordbook">全部加入</button>
       </view>
     </view>
 
-    <!-- 空状态 -->
-    <view class="empty-state" wx:if="{{!result && !presetTopics.length}}">
-      <text class="empty-text">输入主题开始生成词汇</text>
+    <view class="empty-state" wx:if="{{!result}}">
+      <text class="empty-title">下滑或点击输入框进行搜索</text>
+      <text class="empty-text">调好难度后输入场景，LexiMind 会生成适合当前水平的词汇清单</text>
     </view>
   </view>
-</view> 
+</view>

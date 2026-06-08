@@ -1,9 +1,14 @@
+const CLOUD_ENV_ID = 'leximind-d8gbt86zs20f2de28'
+
 App({
   onLaunch() {
-    // 小程序启动时执行
+    if (wx.cloud && CLOUD_ENV_ID) {
+      wx.cloud.init({
+        env: CLOUD_ENV_ID,
+        traceUser: true
+      })
+    }
   },
-  
-  globalData: {
-    // 全局数据
-  }
-}) 
+
+  globalData: {}
+})

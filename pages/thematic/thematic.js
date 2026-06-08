@@ -1,30 +1,29 @@
 const { generateThematicWords } = require('../../utils/thematicWords.js')
 
+const getDifficultyCopy = (level) => {
+  if (level <= 3) {
+    return '偏日常表达，适合快速建立场景词汇'
+  }
+
+  if (level <= 7) {
+    return '偏进阶表达，兼顾准确性和实用性'
+  }
+
+  return '偏专业表达，加入更高阶或学术化词汇'
+}
+
 Page({
   data: {
     inputTopic: '',
     loading: false,
     result: null,
-    selectedDifficulty: 'all',
-    generateDifficulty: 'all',
+    difficultyLevel: 5,
+    difficultyHint: getDifficultyCopy(5),
     filteredWords: [],
-    presetTopics: [
-      '大都会博物馆',
-      '咖啡厅',
-      '医院就诊',
-      '机场出行',
-      '酒店住宿',
-      '餐厅用餐',
-      '购物中心',
-      '图书馆',
-      '健身房',
-      '银行办事',
-      '邮局寄件'
-    ]
+    searchFocused: false
   },
 
-  // 分享配置
-  onShareTimeline: function() {
+  onShareTimeline() {
     return {
       title: 'LexiMind主题词汇生成器 - 根据场景学习英语词汇',
       query: '',
@@ -32,60 +31,132 @@ Page({
     }
   },
 
-  onShareAppMessage: function () {
+  onShareAppMessage() {
     return {
       title: 'LexiMind主题词汇生成器',
       path: '/pages/thematic/thematic'
     }
   },
 
-  // 输入框内容变化
+  onPageScroll(e) {
+    this.scrollTop = e.scrollTop
+  },
+
+  onTouchStart(e) {
+    const touch = e.touches && e.touches[0]
+    if (!touch) return
+
+    this.touchStartX = touch.clientX
+    this.touchStartY = touch.clientY
+    this.pullReady = false
+  },
+
+  onTouchMove(e) {
+    const touch = e.touches && e.touches[0]
+    if (!touch || this.scrollTop > 40) return
+
+    const deltaX = touch.clientX - this.touchStartX
+    const deltaY = touch.clientY - this.touchStartY
+
+    if (deltaY > 48 && Math.abs(deltaX) < 70) {
+      this.pullReady = true
+    }
+  },
+
+  onTouchEnd() {
+    if (this.pullReady) {
+      this.focusSearchFromPull()
+    }
+
+    this.pullReady = false
+  },
+
+  focusSearchFromPull() {
+    wx.pageScrollTo({
+      scrollTop: 0,
+      duration: 180
+    })
+
+    this.setData({
+      searchFocused: false
+    })
+
+    setTimeout(() => {
+      this.setData({
+        searchFocused: true
+      })
+    }, 80)
+
+  },
+
+  onSearchFocus() {
+    this.setData({
+      searchFocused: true
+    })
+  },
+
+  onSearchBlur() {
+    this.setData({
+      searchFocused: false
+    })
+  },
+
+  onKeyboardHeightChange(e) {
+    if (e.detail.height === 0) {
+      this.setData({
+        searchFocused: false
+      })
+    }
+  },
+
   onTopicInput(e) {
     this.setData({
       inputTopic: e.detail.value
     })
   },
 
-  // 清空输入
   clearInput() {
     this.setData({
       inputTopic: '',
       result: null,
-      filteredWords: [],
-      selectedDifficulty: 'all'
+      filteredWords: []
     })
+    this.focusSearchFromPull()
   },
 
-  // 选择生成难度
-  selectGenerateDifficulty(e) {
-    const difficulty = e.currentTarget.dataset.difficulty
+  onDifficultyChanging(e) {
+    this.updateDifficulty(e.detail.value)
+  },
+
+  onDifficultyChange(e) {
+    this.updateDifficulty(e.detail.value)
+  },
+
+  updateDifficulty(value) {
+    const level = Math.max(1, Math.min(10, Number(value) || 5))
+
     this.setData({
-      generateDifficulty: difficulty
+      difficultyLevel: level,
+      difficultyHint: getDifficultyCopy(level)
     })
   },
 
-  // 选择预设主题
-  selectPresetTopic(e) {
-    const topic = e.currentTarget.dataset.topic
-    this.setData({
-      inputTopic: topic
-    })
-    this.generateWords()
-  },
-
-  // 生成主题词汇
   async generateWords() {
-    if (!this.data.inputTopic.trim()) {
+    const topic = this.data.inputTopic.trim()
+
+    if (!topic) {
       wx.showToast({
         title: '请输入主题',
         icon: 'none'
       })
+      this.focusSearchFromPull()
       return
     }
 
     this.setData({
       loading: true,
-      result: null
+      result: null,
+      filteredWords: []
     })
 
     wx.showLoading({
@@ -94,28 +165,20 @@ Page({
     })
 
     try {
-      console.log('开始生成主题词汇:', this.data.inputTopic, '难度:', this.data.generateDifficulty)
-      const result = await generateThematicWords(this.data.inputTopic, this.data.generateDifficulty)
-      console.log('生成结果:', result)
+      const result = await generateThematicWords(topic, this.data.difficultyLevel)
 
-      result.targetDifficulty = this.data.generateDifficulty
+      result.targetDifficultyLevel = result.targetDifficultyLevel || this.data.difficultyLevel
 
       this.setData({
-        result: result,
-        selectedDifficulty: 'all',
+        result,
         filteredWords: result.words
       })
 
-      const difficultyText = this.data.generateDifficulty === 'all' ? '各种难度的' : 
-                            this.data.generateDifficulty === 'beginner' ? '初级' :
-                            this.data.generateDifficulty === 'intermediate' ? '中级' : '高级'
-
       wx.showToast({
-        title: `成功生成${result.words.length}个${difficultyText}单词`,
+        title: `生成${result.words.length}个词`,
         icon: 'success'
       })
     } catch (error) {
-      console.error('生成词汇失败:', error)
       wx.showToast({
         title: error.message || '生成失败，请稍后重试',
         icon: 'none',
@@ -129,47 +192,26 @@ Page({
     }
   },
 
-  // 根据难度筛选词汇
-  filterByDifficulty(e) {
-    const difficulty = e.currentTarget.dataset.difficulty
-    this.setData({
-      selectedDifficulty: difficulty
-    })
-
-    if (difficulty === 'all') {
-      this.setData({
-        filteredWords: this.data.result.words
-      })
-    } else {
-      const filtered = this.data.result.words.filter(word => word.difficulty === difficulty)
-      this.setData({
-        filteredWords: filtered
-      })
-    }
-  },
-
-  // 添加单个单词到生词本
   addToWordbook(e) {
     const word = e.currentTarget.dataset.word
-    
-    // 构造符合生词本格式的数据
+
     const wordData = {
       word: word.word,
       phonetic: word.phonetic,
       definition: word.definition,
       translation: word.translation,
-      examples: [word.example], // 转换为数组格式
+      examples: [word.example],
       addTime: new Date().getTime(),
-      source: 'thematic', // 标记来源
-      topic: this.data.result.topic, // 记录主题
-      difficulty: word.difficulty, // 记录难度
-      targetDifficulty: this.data.result.targetDifficulty // 记录生成时的目标难度
+      source: 'thematic',
+      topic: this.data.result.topic,
+      difficulty: word.difficulty,
+      difficultyLevel: word.difficultyLevel || this.data.result.targetDifficultyLevel,
+      targetDifficultyLevel: this.data.result.targetDifficultyLevel
     }
 
     const wordList = wx.getStorageSync('wordbook') || []
-    
-    // 检查是否已存在
-    const exists = wordList.some(item => item.word.toLowerCase() === word.word.toLowerCase())
+    const exists = wordList.some((item) => item.word.toLowerCase() === word.word.toLowerCase())
+
     if (exists) {
       wx.showToast({
         title: '该单词已在生词本中',
@@ -180,14 +222,13 @@ Page({
 
     wordList.push(wordData)
     wx.setStorageSync('wordbook', wordList)
-    
+
     wx.showToast({
       title: '添加成功',
       icon: 'success'
     })
   },
 
-  // 将所有单词加入生词本
   addAllToWordbook() {
     if (!this.data.result || !this.data.result.words) {
       wx.showToast({
@@ -200,49 +241,40 @@ Page({
     const wordList = wx.getStorageSync('wordbook') || []
     let addedCount = 0
 
-    this.data.result.words.forEach(word => {
-      const wordData = {
-        word: word.word,
-        phonetic: word.phonetic,
-        definition: word.definition,
-        translation: word.translation,
-        examples: [word.example],
-        addTime: new Date().getTime(),
-        source: 'thematic',
-        topic: this.data.result.topic,
-        difficulty: word.difficulty,
-        targetDifficulty: this.data.result.targetDifficulty
-      }
+    this.data.result.words.forEach((word) => {
+      const exists = wordList.some((item) => item.word.toLowerCase() === word.word.toLowerCase())
 
-      // 检查是否已存在
-      const exists = wordList.some(item => item.word.toLowerCase() === word.word.toLowerCase())
       if (!exists) {
-        wordList.push(wordData)
+        wordList.push({
+          word: word.word,
+          phonetic: word.phonetic,
+          definition: word.definition,
+          translation: word.translation,
+          examples: [word.example],
+          addTime: new Date().getTime(),
+          source: 'thematic',
+          topic: this.data.result.topic,
+          difficulty: word.difficulty,
+          difficultyLevel: word.difficultyLevel || this.data.result.targetDifficultyLevel,
+          targetDifficultyLevel: this.data.result.targetDifficultyLevel
+        })
         addedCount++
       }
     })
 
     wx.setStorageSync('wordbook', wordList)
-    
-    if (addedCount > 0) {
-      wx.showToast({
-        title: `成功添加${addedCount}个单词`,
-        icon: 'success'
-      })
-    } else {
-      wx.showToast({
-        title: '所有单词已在生词本中',
-        icon: 'none'
-      })
-    }
+
+    wx.showToast({
+      title: addedCount > 0 ? `添加${addedCount}个词` : '单词已在生词本中',
+      icon: addedCount > 0 ? 'success' : 'none'
+    })
   },
 
-  // 清空结果，重新生成
   clearResult() {
     this.setData({
       result: null,
-      filteredWords: [],
-      selectedDifficulty: 'all'
+      filteredWords: []
     })
+    this.focusSearchFromPull()
   }
-}) 
+})

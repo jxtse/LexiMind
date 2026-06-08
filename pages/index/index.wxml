@@ -1,22 +1,33 @@
-<view class="container">
+<view
+  class="container"
+  bindtouchstart="onTouchStart"
+  bindtouchmove="onTouchMove"
+  bindtouchend="onTouchEnd"
+  bindtouchcancel="onTouchEnd"
+>
   <view class="top-card">
     <view class="brand">
       <text class="brand-name">LexiMind</text>
-      <text class="brand-slogan">AI智能词典</text>
+      <text class="brand-slogan">AI 智能词典</text>
     </view>
-    <view class="search-box">
+
+    <view class="search-box {{searchFocused ? 'is-focused' : ''}}">
       <view class="search-bar">
         <image class="search-icon" src="/images/search.png"></image>
-        <input 
-          class="search-input" 
-          placeholder=""
+        <input
+          class="search-input"
+          placeholder="输入英文单词"
           placeholder-class="placeholder"
           value="{{searchWord}}"
+          focus="{{searchFocused}}"
           bindinput="onInputChange"
+          bindfocus="onSearchFocus"
+          bindblur="onSearchBlur"
+          bindkeyboardheightchange="onKeyboardHeightChange"
           confirm-type="search"
           bindconfirm="searchWord"
         />
-        <view class="clear-icon" bindtap="clearInput" wx:if="{{searchWord}}">✕</view>
+        <view class="clear-icon" bindtap="clearInput" wx:if="{{searchWord}}">×</view>
       </view>
       <button class="search-btn" bindtap="searchWord">查询</button>
     </view>
@@ -29,7 +40,7 @@
       <view class="definition">{{wordResult.definition}}</view>
       <view class="translation">{{wordResult.translation}}</view>
       <view class="examples">
-        <view class="example-title">例句：</view>
+        <view class="example-title">例句</view>
         <view class="example-item" wx:for="{{wordResult.examples}}" wx:key="*this">
           {{item}}
         </view>
@@ -38,8 +49,8 @@
     </view>
 
     <view class="empty-state" wx:if="{{!wordResult}}">
-      <!-- <image class="empty-icon" src="/images/dict-empty.png"></image> -->
-      <text class="empty-text">输入单词开始查询</text>
+      <text class="empty-title">下滑或点击输入框进行搜索</text>
+      <text class="empty-text">输入一个单词，LexiMind 会给出释义、翻译和例句</text>
     </view>
   </view>
-</view> 
+</view>

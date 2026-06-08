@@ -1,215 +1,266 @@
 .container {
   min-height: 100vh;
-  background-color: #f5f5f5;
+  background: #f4f6f6;
   position: relative;
 }
 
 .top-card {
-  background: linear-gradient(180deg, 
-    #178E96 0%, 
-    #1fa8b1 40%, 
-    rgba(23, 142, 150, 0.5) 70%,
-    rgba(23, 142, 150, 0.2) 85%,
-    rgba(245, 245, 245, 0) 100%
-  );
-  padding: 40rpx 30rpx 200rpx;
-  border-radius: 0;
+  background: linear-gradient(180deg, #178e96 0%, #20a6ad 58%, rgba(244, 246, 246, 0) 100%);
+  padding: 44rpx 30rpx 196rpx;
   position: relative;
   z-index: 1;
-  box-shadow: none;
 }
 
 .brand {
   text-align: center;
-  margin-bottom: 40rpx;
-  color: #FDE3C8;
+  margin-bottom: 34rpx;
+  color: #fde3c8;
+  animation: floatIn 360ms ease-out both;
 }
 
 .brand-name {
-  font-size: 60rpx;
-  font-weight: bold;
-  text-shadow: 0 2rpx 4rpx rgba(0,0,0,0.1);
   display: block;
+  font-size: 60rpx;
+  font-weight: 700;
+  line-height: 1.05;
 }
 
 .brand-slogan {
-  font-size: 28rpx;
-  opacity: 0.9;
-  margin-top: 10rpx;
   display: block;
+  margin-top: 10rpx;
+  font-size: 28rpx;
+  opacity: 0.92;
 }
 
 .search-box {
   display: flex;
   align-items: center;
-  gap: 20rpx;
-  padding: 0 10rpx;
+  gap: 18rpx;
+  padding: 0 8rpx;
   margin: 0 auto;
-  max-width: 680rpx;
+  max-width: 690rpx;
+  transition: transform 260ms ease;
+  animation: liftIn 420ms ease-out 80ms both;
+}
+
+.search-box.is-focused {
+  transform: translateY(-6rpx);
 }
 
 .search-bar {
   flex: 1;
+  min-width: 0;
   display: flex;
   align-items: center;
-  background: rgba(255,255,255,0.95);
-  border-radius: 20rpx;
-  padding: 16rpx 24rpx;
-  transition: all 0.3s;
-  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.1);
+  background: rgba(255, 255, 255, 0.96);
+  border: 2rpx solid rgba(255, 255, 255, 0.7);
+  border-radius: 16rpx;
+  padding: 16rpx 22rpx;
+  box-shadow: 0 14rpx 34rpx rgba(20, 119, 128, 0.18);
+  transition: box-shadow 220ms ease, border-color 220ms ease, background 220ms ease;
 }
 
-.search-bar:focus-within {
-  background: #fff;
-  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.15);
+.search-box.is-focused .search-bar {
+  background: #ffffff;
+  border-color: rgba(253, 227, 200, 0.9);
+  box-shadow: 0 18rpx 42rpx rgba(20, 119, 128, 0.24);
 }
 
 .search-icon {
-  width: 36rpx;
-  height: 36rpx;
-  margin-right: 16rpx;
-  opacity: 0.6;
+  width: 34rpx;
+  height: 34rpx;
+  margin-right: 14rpx;
+  opacity: 0.62;
 }
 
 .search-input {
   flex: 1;
+  height: 42rpx;
+  line-height: 42rpx;
   font-size: 28rpx;
-  height: 36rpx;
-  line-height: 36rpx;
+  color: #223033;
 }
 
 .placeholder {
-  color: #178E96;
+  color: rgba(23, 142, 150, 0.58);
 }
 
 .clear-icon {
-  color: #178E96;
-  font-size: 28rpx;
-  padding: 16rpx;
-  margin: -16rpx;
-  width: 32rpx;
-  height: 32rpx;
+  flex: none;
+  width: 40rpx;
+  height: 40rpx;
+  margin-left: 8rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0.8;
-  transition: opacity 0.2s;
+  color: #178e96;
+  font-size: 30rpx;
+  opacity: 0.75;
+  transition: opacity 160ms ease, transform 160ms ease;
 }
 
 .clear-icon:active {
-  opacity: 0.5;
+  opacity: 0.45;
+  transform: scale(0.88);
 }
 
 .search-btn {
-  background: #FFFFFF;
-  color: #178E96;
-  font-size: 28rpx;
-  padding: 0 40rpx;
-  height: 68rpx;
-  line-height: 68rpx;
-  border-radius: 20rpx;
+  flex: none;
+  width: 120rpx;
+  height: 72rpx;
+  line-height: 72rpx;
+  padding: 0;
   margin: 0;
-  font-weight: bold;
-  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.1);
+  border-radius: 16rpx;
+  background: #ffffff;
+  color: #178e96;
+  font-size: 28rpx;
+  font-weight: 600;
+  box-shadow: 0 14rpx 30rpx rgba(20, 119, 128, 0.16);
+  transition: transform 160ms ease, opacity 160ms ease;
 }
 
 .search-btn:active {
-  opacity: 0.9;
-  transform: translateY(2rpx);
+  opacity: 0.92;
+  transform: translateY(3rpx) scale(0.98);
 }
 
 .content {
-  padding: 0 20rpx;
-  margin-top: -140rpx;
+  padding: 0 24rpx 44rpx;
+  margin-top: -132rpx;
   position: relative;
   z-index: 2;
 }
 
 .result-box {
-  margin: 20rpx;
-  padding: 40rpx;
-  border-radius: 20rpx;
+  margin: 0 4rpx;
+  padding: 36rpx;
+  border-radius: 16rpx;
   background: rgba(255, 255, 255, 0.98);
-  box-shadow: 0 4rpx 24rpx rgba(0,0,0,0.12);
-  backdrop-filter: blur(10px);
+  box-shadow: 0 16rpx 44rpx rgba(33, 48, 51, 0.11);
+  animation: cardIn 320ms ease-out both;
 }
 
 .word {
-  font-size: 48rpx;
-  font-weight: bold;
-  color: #333;
+  font-size: 50rpx;
+  font-weight: 700;
+  color: #213033;
+  line-height: 1.15;
   margin-bottom: 10rpx;
 }
 
 .phonetic {
-  color: #666;
+  color: #647275;
   font-size: 28rpx;
-  margin-bottom: 20rpx;
+  margin-bottom: 22rpx;
 }
 
-.definition, .translation {
+.definition,
+.translation {
   margin: 20rpx 0;
-  line-height: 1.6;
+  line-height: 1.62;
   font-size: 30rpx;
 }
 
 .definition {
-  color: #444;
+  color: #364245;
 }
 
 .translation {
-  color: #666;
+  color: #178e96;
+  font-weight: 500;
 }
 
 .examples {
   margin-top: 30rpx;
-  padding-top: 20rpx;
-  border-top: 1px solid #eee;
+  padding-top: 22rpx;
+  border-top: 1rpx solid #edf0f0;
 }
 
 .example-title {
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 16rpx;
+  color: #213033;
+  margin-bottom: 14rpx;
   font-size: 28rpx;
+  font-weight: 600;
 }
 
 .example-item {
-  color: #666;
-  margin: 16rpx 0;
+  color: #687679;
+  margin: 14rpx 0;
   font-size: 26rpx;
   line-height: 1.6;
 }
 
 .add-btn {
-  margin-top: 40rpx;
-  background: #178E96;
+  margin-top: 34rpx;
+  height: 84rpx;
+  line-height: 84rpx;
+  background: #178e96;
   color: white;
   font-size: 30rpx;
-  border-radius: 20rpx;
+  border-radius: 16rpx;
+  transition: transform 160ms ease, opacity 160ms ease;
 }
 
 .add-btn:active {
-  opacity: 0.8;
+  opacity: 0.9;
+  transform: translateY(3rpx);
 }
 
 .empty-state {
+  min-height: 420rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-top: 200rpx;
+  padding: 44rpx 30rpx;
+  color: #178e96;
+  text-align: center;
+  animation: cardIn 360ms ease-out both;
 }
 
-.empty-icon {
-  width: 240rpx;
-  height: 240rpx;
-  margin-bottom: 40rpx;
-  opacity: 0.6;
+.empty-title {
+  font-size: 34rpx;
+  font-weight: 650;
+  margin-bottom: 14rpx;
 }
 
 .empty-text {
-  color: #178E96;
-  font-size: 28rpx;
-  margin-bottom: 40rpx;
-} 
+  max-width: 520rpx;
+  color: #687679;
+  font-size: 26rpx;
+  line-height: 1.55;
+}
+
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(18rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes liftIn {
+  from {
+    opacity: 0;
+    transform: translateY(24rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(24rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

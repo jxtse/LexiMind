@@ -5,6 +5,7 @@
     "pages/review/review",
     "pages/thematic/thematic"
   ],
+  "lazyCodeLoading": "requiredComponents",
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#178E96",
@@ -42,6 +43,5 @@
         "selectedIconPath": "images/tab/字典active.png"
       }
     ]
-  },
-  "enableShareTimeline": true
-} 
+  }
+}
